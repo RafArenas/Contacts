@@ -14,7 +14,7 @@ class ContactController extends Controller
      */
     public function index()
     {
-        return Contact::get();
+        return Contact::orderBy('id', 'desc')->get();
     }
 
     /**
@@ -25,7 +25,8 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $contact = new Contact();
+        $contact->create($request->all());
     }
 
     /**
@@ -48,7 +49,7 @@ class ContactController extends Controller
      */
     public function update(Request $request, Contact $contact)
     {
-        //
+        $contact->update($request->all());
     }
 
     /**
@@ -59,6 +60,6 @@ class ContactController extends Controller
      */
     public function destroy(Contact $contact)
     {
-        //
+        $contact->delete();
     }
 }
