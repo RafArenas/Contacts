@@ -41,7 +41,7 @@
                     </div>
                     <div class="modal-footer">
                         <button  @click="closeModal();" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <button @click=save(); type="button" class="btn btn-success">Guardar Cambios</button>
+                        <button @click.prevent="save();" type="button" class="btn btn-success">Guardar Cambios</button>
                     </div>
                     </div>
                 </div>
@@ -72,7 +72,7 @@
                             <button @click="update=true; openModal(contacto);" class="btn btn-warning">Editar</button>
                         </td>
                         <td>
-                            <button @click="remove(contact.id)" class="btn btn-danger">Eliminar</button>
+                            <button @click="remove(contacto.id)" class="btn btn-danger">Eliminar</button>
                         </td>
                     </tr>
                 </tbody>
@@ -88,31 +88,32 @@ import axios from 'axios';
         data() {
             return {
                 contacto: {
-                    name: '',
-                    last_name: '',
-                    email: '',
-                    phone: '',
-                    address: '',
+                    name:'',
+                    last_name:'',
+                    email:'',
+                    phone:'',
+                    address:'',
                 },
+
                 id:0,
-                update: true,
+                update:true,
                 modal:0,
-                titleModal: '',
-                people: [],
+                titleModal:'',
+                people:[],
             }
         },
         methods: {
             async list() {
-                const res = await axios.get('contacts')
-                this.people = res.data
+                const res = await axios.get('contacts');
+                this.people = res.data;
             },
             async remove(id) {
                 const res = await axios.delete('/contacts/' +id);
                 this.list();
             },
-            async save(id) {
+            async save() {
                 if (this.update) {
-                    const res = await axios.put('/contacts', +this.id, this.contacto)
+                    const res = await axios.pat('/contacts' + this.id, this.contacto);
                 }else{
                     const res  = await axios.post('/contacts', this.contacto);
                 }
@@ -144,7 +145,7 @@ import axios from 'axios';
             },
         },
         created () {
-            this.list()
+            this.list();
         },
     }
 </script>
